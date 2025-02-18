@@ -93,21 +93,24 @@ class ProductResource extends Resource
                 ]), */
 
                 Wizard::make([
-                    Step::make('Main Data')
+                    Step::make(__('Main Data'))
                         ->schema([
                             TextInput::make('name')
+                                ->label(__('Product Name'))
                                 ->required()
                                 ->placeholder('Product name')
                                 ->unique(ignoreRecord: true),
                             TextInput::make('price')
+                                ->label(__('Product Price'))
                                 ->required()
                                 ->placeholder('Product price')
                                 ->rules(['numeric']),
                             RichEditor::make('description')
+                                ->label(__('Product Description'))
                                 ->columnSpanFull()
                                 ->required(),
                         ]),
-                    Step::make('Additional Data')
+                    Step::make(__('Additional Data'))
                         ->schema([
                             Radio::make('status')
                                 ->options(self::$statuses),
