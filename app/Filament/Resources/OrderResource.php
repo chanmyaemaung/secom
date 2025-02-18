@@ -5,14 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrderResource extends Resource
@@ -52,11 +55,24 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('Mark a Completed')
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-check-badge')
+                        ->hidden(fn(Order $record) => $record->is_completed)
+                        ->action(fn(Order $record) => $record->update(['is_completed' => true]))
+                ])
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    BulkAction::make('Mark as Completed')
+                        ->icon('heroicon-o-check-badge')
+                        ->requiresConfirmation()
+                        ->action(fn(Collection $records) => $records->each->update(['is_completed' => true]))
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }
