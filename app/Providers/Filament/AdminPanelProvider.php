@@ -31,6 +31,11 @@ class AdminPanelProvider extends PanelProvider
             ->emailVerification()
             ->profile()
             ->login()
+            // ->topNavigation()
+            ->navigationGroups([
+                'Classfiers',
+                'General',
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])
