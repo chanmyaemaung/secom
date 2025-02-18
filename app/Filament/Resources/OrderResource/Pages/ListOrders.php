@@ -11,10 +11,12 @@ class ListOrders extends ListRecords
 {
     protected static string $resource = OrderResource::class;
 
+    protected static ?string $navigationGroup = 'Products';
+
     protected function getHeaderActions(): array
     {
         return [
-            // Actions\CreateAction::make(),
+            Actions\CreateAction::make(),
             // ActionsAction::make('New Order')
             //     ->url(fn(): string => OrderResource::getUrl('create')),
         ];

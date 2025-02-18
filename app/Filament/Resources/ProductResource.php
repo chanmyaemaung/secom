@@ -8,9 +8,17 @@ use App\Filament\Resources\CategoryResource;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Wizard;
+use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -45,28 +53,74 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Products';
+
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
+            // Tab
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->placeholder('Product name')
-                    ->unique(ignoreRecord: true),
-                TextInput::make('price')
-                    ->required()
-                    ->placeholder('Product price')
-                    ->rules(['numeric']),
-                Radio::make('status')
-                    ->options(self::$statuses),
-                Select::make('category_id')
-                    ->relationship('category', 'name'),
-                Select::make('tags')
-                    ->relationship('tags', 'name')
-                    ->preload()
-                    ->multiple(),
+                // Tabs
+                /* Tabs::make()->tabs([
+                    Tab::make('Main Data')
+                        ->schema([
+                            TextInput::make('name')
+                                ->required()
+                                ->placeholder('Product name')
+                                ->unique(ignoreRecord: true),
+                            TextInput::make('price')
+                                ->required()
+                                ->placeholder('Product price')
+                                ->rules(['numeric']),
+                            RichEditor::make('description')
+                                ->columnSpanFull()
+                                ->required(),
+                        ]),
 
-            ]);
+                    Tab::make('Additional Data')
+                        ->schema([
+                            Radio::make('status')
+                                ->options(self::$statuses),
+                            Select::make('category_id')
+                                ->relationship('category', 'name'),
+                            Select::make('tags')
+                                ->relationship('tags', 'name')
+                                ->preload()
+                                ->multiple(),
+                        ])
+                ]), */
+
+                Wizard::make([
+                    Step::make('Main Data')
+                        ->schema([
+                            TextInput::make('name')
+                                ->required()
+                                ->placeholder('Product name')
+                                ->unique(ignoreRecord: true),
+                            TextInput::make('price')
+                                ->required()
+                                ->placeholder('Product price')
+                                ->rules(['numeric']),
+                            RichEditor::make('description')
+                                ->columnSpanFull()
+                                ->required(),
+                        ]),
+                    Step::make('Additional Data')
+                        ->schema([
+                            Radio::make('status')
+                                ->options(self::$statuses),
+                            Select::make('category_id')
+                                ->relationship('category', 'name'),
+                            Select::make('tags')
+                                ->relationship('tags', 'name')
+                                ->preload()
+                                ->multiple(),
+                        ]),
+                ]),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
