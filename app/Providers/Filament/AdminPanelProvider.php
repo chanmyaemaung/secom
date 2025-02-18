@@ -36,6 +36,7 @@ class AdminPanelProvider extends PanelProvider
                 'Classfiers',
                 'General',
             ])
+            ->globalSearchKeyBindings(['command+k', 'control+k'])
             ->colors([
                 'primary' => Color::Amber,
             ])

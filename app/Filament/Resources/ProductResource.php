@@ -36,6 +36,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use function Laravel\Prompts\search;
@@ -56,6 +57,23 @@ class ProductResource extends Resource
     // protected static ?string $navigationGroup = 'Products';
 
     protected static ?int $navigationSort = 2;
+
+
+    // This is where we limit the number of search results
+    protected static int $globalSearchResultsLimit = 3;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description'];
+    }
+
+    // This is where redirect to view page instead of edit page
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return self::getUrl('view', ['record' => $record]);
+    }
 
     public static function form(Form $form): Form
     {
