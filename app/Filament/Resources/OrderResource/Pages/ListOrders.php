@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use App\Filament\Resources\AdminResource\Widgets\TotalOrders;
 use App\Filament\Resources\OrderResource;
 // use Filament\Actions\Action as ActionsAction;
 use Filament\Actions;
@@ -19,6 +20,13 @@ class ListOrders extends ListRecords
             Actions\CreateAction::make(),
             // ActionsAction::make('New Order')
             //     ->url(fn(): string => OrderResource::getUrl('create')),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TotalOrders::class
         ];
     }
 }

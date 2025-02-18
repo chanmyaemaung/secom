@@ -2,6 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\AdminResource\Widgets\LatestOrders;
+use App\Filament\Resources\AdminResource\Widgets\OrdersPerDayChart;
+use App\Filament\Resources\AdminResource\Widgets\Revenue30Days;
+use App\Filament\Resources\AdminResource\Widgets\Revenue7Days;
+use App\Filament\Resources\AdminResource\Widgets\RevenueToday;
+use App\Filament\Resources\AdminResource\Widgets\TotalRevenueStats;
+use App\Models\Order;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -48,8 +55,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                // Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
+                    // RevenueToday::class,
+                    // Revenue7Days::class,
+                    // Revenue30Days::class,
+                OrdersPerDayChart::class,
+                TotalRevenueStats::class,
+                LatestOrders::class,
             ])
             ->middleware([
                 EncryptCookies::class,

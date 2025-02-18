@@ -4,5 +4,8 @@
     "Product Name": "ပစ္စည်းအမည်",
     "Product Price": "ပစ္စည်းစျေး",
     "Product Description": "ပစ္စည်းဖော်ပြချက်",
-    "Classifiers": "အုပ်စုများ"
+    "Classifiers": "အုပ်စုများ",
+    "Revenue Today (USD)": "ယနေ့ရရှိငွေ (USD)",
+    "Revenue Last 7 Days (USD)": "၇ရက်အတွင်း ရရှိငွေ (USD)",
+    "Revenue Last 30 Days (USD)": "ရက်၃၀အတွင်း ရရှိငွေ (USD)"
 }
